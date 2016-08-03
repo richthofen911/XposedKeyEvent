@@ -14,7 +14,7 @@
             android:value="true"/>
         <meta-data
             android:name="xposeddescription"
-            android:value="Demo example using Xposed to cahnge status bar clock color"/>
+            android:value="Demo example using Xposed to change status bar clock color"/>
         <meta-data
             android:name="xposedminversion"
             android:value="82"/>
@@ -23,7 +23,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="de.robv.android.xposed.category.MODULE_SETTINGS" />
             </intent-filter>
         </activity>
     </application>
