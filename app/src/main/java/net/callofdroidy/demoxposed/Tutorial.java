@@ -1,5 +1,6 @@
 package net.callofdroidy.demoxposed;
 
+import android.app.AndroidAppHelper;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.PowerManager;
@@ -21,11 +22,13 @@ public class Tutorial implements IXposedHookLoadPackage{
     public void handleLoadPackage(final LoadPackageParam loadPackageParam) throws Throwable{
         if (!loadPackageParam.packageName.equals("android.media"))
             return;
+        XposedBridge.log("now in android.media");
         Class<?> audioManager = XposedHelpers.findClass("android.media.AudioManager", loadPackageParam.classLoader);
         XposedBridge.hookAllMethods(audioManager, "handleKeyDown", new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                Context context = (Context)param.getResult();
+                Context context = AndroidAppHelper.currentApplication();
+                //Context context = (Context)param.getResult();
                 PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
                 if(!powerManager.isScreenOn()){
                     PowerManager.WakeLock wl = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK |PowerManager.ACQUIRE_CAUSES_WAKEUP |PowerManager.ON_AFTER_RELEASE,"MyLock");
